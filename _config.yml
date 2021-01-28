@@ -587,6 +587,7 @@ plugins:
   # 视差滚动效果
   # https://github.com/pixelcog/parallax.js/tree/v2.0.0-alpha
   # parallax 与 backstretch.position:cover 只能选择一个
+  # 由于插件过度封装，且pixelcog/parallax.js已不在维护，请务必保证所有图片尺寸一致！！！【暂无兼容方案，欢迎PR】
   parallax:
     enable: #true
     js: /js/jquery.parallax.min.js # 2.0.0-alpha
