@@ -28,7 +28,7 @@
       posX: 'center',
       posY: 'center',
       overScrollFix: false,
-      excludeAgents: null, // /(iPod|iPhone|iPad|Android)/
+      excludeAgents: /(iPod|iPhone|iPad|Android)/,
       aspectRatio: null,
       // jquery selectors
       sliderSelector: '>.parallax-slider',
@@ -48,27 +48,26 @@
       },
     });
   }
-  function pjax_parallax(){
-    parallax(imgs[(index)%(imgs.length)]);
+  function next_parallax(){
+    $("#l_cover .parallax-mirror img")[0].src=imgs[(index)%(imgs.length)];
     index++;
+    fetch(imgs[(index)%(imgs.length)]); // cach
+  }
+  function pjax_parallax(){
+    next_parallax();
     volantis.IntervalParallax = setInterval(function () {
-      try {
-        $('#parallax-window').parallax('destroy')
-      } catch (error) {}
-      parallax(imgs[(index)%(imgs.length)]);
-      index++;
+      next_parallax();
     }, 15000)
   }
   var checkParallax = setInterval(function () {
 	  if ($("#safearea").css("display")!="block") return 
 	  if (typeof $('#parallax-window').parallax == 'undefined') return 
     clearInterval(checkParallax)
-    pjax_parallax();
-  }, 100)
-  volantis.pjax.push(pjax_parallax,'pjax_parallax');
+    parallax(imgs[(index)%(imgs.length)]);
+  }, 500)
+  volantis.pjax.push(pjax_parallax);
   volantis.pjax.send(()=>{
       try {
-        $('#parallax-window').parallax('destroy');
         clearInterval(volantis.IntervalParallax);
       } catch (error) {}
     },'pjax_parallax')
